@@ -1,8 +1,9 @@
-﻿using TestTask.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TestTask.Data;
 using TestTask.Models;
 using TestTask.Services.Interfaces;
 
-namespace TestTask.Services
+namespace TestTask.Services.Implementations
 {
     public class OrderService : IOrderService
     {
@@ -15,12 +16,20 @@ namespace TestTask.Services
 
         public Task<Order> GetOrder()
         {
-            throw new NotImplementedException();
+            var order = _context.Orders
+                .OrderByDescending(_ => _.Price)
+                .FirstAsync();
+                
+            return order;
         }
 
         public Task<List<Order>> GetOrders()
         {
-            throw new NotImplementedException();
+            var orders = _context.Orders
+                .Where(_ => _.Quantity > 10)
+                .ToListAsync();
+
+            return orders;
         }
     }
 }
