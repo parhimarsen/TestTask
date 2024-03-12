@@ -17,7 +17,7 @@ namespace TestTask.Services.Implementations
         public Task<Order> GetOrder()
         {
             var order = _context.Orders
-                .OrderByDescending(_ => _.Price)
+                .OrderByDescending(_ => _.Price * _.Quantity)
                 .FirstAsync();
                 
             return order;
